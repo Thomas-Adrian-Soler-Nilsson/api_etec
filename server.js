@@ -2,7 +2,25 @@
 //Samuel Roberto Dias Batista Amante
 // Importa express
 const express = require('express')
+
+const mysql = require('mysql2');
+
 const app = express()
+
+app.use(express.json());
+
+const conexao = mysql.createConnection({
+    host: 'localhost',
+
+    user: 'root',
+
+    password: 'admin',
+
+    database: 'etec_api'
+}
+
+)
+
 
 //cria rota GET
 app.get('/', (req, res) => {
