@@ -58,6 +58,42 @@ app.get('/usuarios', (req,res) => {
     )
 })
 
+app.post('/usuarios', (req, res) => {
+
+    const nome = req.body.nome;
+
+    const idade = req.body.idade;
+    
+    const email= req.body.email;
+
+    const cidade = req.body.cidade;
+
+    const sql = 'INSERT INTO usuarios (nome, idade,email,cidade) VALUES (?, ?, ?, ?)';
+
+    conexao.query(
+
+        sql,
+
+        [nome, idade, email, cidade],
+
+        (erro, resultado) =>{
+
+            if (erro) {
+                console.log(erro);
+
+                return;
+
+            }
+
+            res.json({
+                mensagem:'Usuario cadastrado com sucesso    '
+            })
+
+        }
+    );
+
+});
+
 //rota de produtos
 app.get('/produtos', (req, res) => {
     const produtos = [
