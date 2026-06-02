@@ -14,12 +14,23 @@ const conexao = mysql.createConnection({
 
     user: 'root',
 
-    password: 'admin',
+    password: '',
 
     database: 'etec_api'
 }
 
 )
+
+conexao.connect((erro) => {
+    if(erro){
+        console.log('erro ao conectar');
+
+        return;
+    }
+
+    console.log('MySQL conectado')
+
+});
 
 
 //cria rota GET
@@ -33,49 +44,18 @@ app.get('/', (req, res) => {
 
 //rota usuarios
 app.get('/usuarios', (req,res) => {
-    const usuarios = [
-        {
-            id: 1,
-            nome: 'André',
-            idade:'34',
-            Email:'andréprof@gmail.com',
-            Cidade:'Santo André'
-        },
+    const sql = 'SELECT * FROM usuarios';
 
-        {
-            id: 2,
-            nome: 'Maria',
-            idade:'22',
-            Email:'marialegal444@gmail.com',
-            Cidade:'Susano'
-        },
-
-        {
-            id: 3,
-            nome: 'Tatu',
-            idade:'3',
-            Email:'tatubando@email.com',
-            Cidade:'Ubatuba'
-        },
-
-        {
-            id: 4,
-            nome: 'Jorge',
-            idade:'32',
-            Email:'historia@hirtorio.com',
-            Cidade:'Indaiatuba'
-        },
-
-        {
-            id: 3,
-            nome: 'Onça Parda',
-            idade:'8',
-            Email:'Oncaparda@email.com',
-            Cidade:'Jales'
+    conexao.query(sql, (erro,resultado) => {
+        if (erro){
+            
+            console.log(erro);
+            
+            return;
         }
-
-    ]
-res.json(usuarios);
+        res.json(resultado);
+    }
+    )
 })
 
 //rota de produtos
